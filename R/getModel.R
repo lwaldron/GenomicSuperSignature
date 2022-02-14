@@ -7,14 +7,14 @@ s2p_get_cache <- function(cache = tools::R_user_dir("GenomicSuperSignature",
 #'
 s2p_cached_url <- function(url, rname = url, ask_on_update=FALSE,
                            ...) {
-  bfc = s2p_get_cache()
-  bfcres = bfcquery(bfc,rname,'rname')
+  bfc <- s2p_get_cache()
+  bfcres <- bfcquery(bfc,rname,'rname')
 
-  rid = bfcres$rid
+  rid <- bfcres$rid
   # Not found
-  fileage = 0
+  fileage <- 0
   if(!length(rid)) {
-    rid = names(bfcadd(bfc, rname, url))
+    rid <- names(bfcadd(bfc, rname, url))
   }
   # if needs update, do the download
   if(bfcneedsupdate(bfc, rid)) {
@@ -38,6 +38,9 @@ s2p_cached_url <- function(url, rname = url, ask_on_update=FALSE,
 #' }
 #' @param load Default is \code{TRUE}. If it's set to \code{FALSE}, the models
 #' are just downloaded to cache but not loaded into memory.
+#' @param version Default is \code{"latest"}, which will download the latest
+#' version of RAVmodel.You can specify different versions - more information
+#' on different versions are \url{}.
 #'
 #' @return File cache location or PCAGenomicSignatures object loaded from it.
 #'
@@ -45,7 +48,8 @@ s2p_cached_url <- function(url, rname = url, ask_on_update=FALSE,
 #' z = getModel("C2")
 #'
 #' @export
-getModel <- function(prior = c("C2", "PLIERpriors"), load = TRUE) {
+getModel <- function(prior = c("C2", "PLIERpriors"), load = TRUE,
+                     version = "latest") {
 
   if (!prior %in% c("C2", "PLIERpriors")) {
     stop("Prior you entered isn't available yet.")
